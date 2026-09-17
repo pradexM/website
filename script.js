@@ -1,6 +1,7 @@
 /* =========================================================
    PORTFOLIO — script.js
    Vanilla JS, no dependencies.
+   Formspree endpoint: https://formspree.io/f/xeaoqkdl
    ========================================================= */
 
 (function () {
@@ -277,10 +278,11 @@
   }
 
   /* =======================================================
-     7. CONTACT FORM VALIDATION
+     7. CONTACT FORM — validation + Formspree submission
      ------------------------------------------------------
-     Frontend-only validation. Hook the success branch
-     to your backend (Formspree, Netlify, custom API, etc.).
+     Endpoint: https://formspree.io/f/xeaoqkdl
+     Client-side validation runs first; only clean data is
+     sent to Formspree via fetch().
      ======================================================= */
   const form       = $("#contact-form");
   const formStatus = $("#form-status");
@@ -325,10 +327,13 @@
     return true;
   }
 
-  // Live validation: clear error on input, validate on blur
   if (form) {
-    const fields = $$("input, textarea", form);
+    // Only validate real user fields (skip hidden honeypot / _subject etc.)
+    const fields = $$("input, textarea", form).filter(
+      (f) => !f.name.startsWith("_") && f.type !== "hidden"
+    );
 
+    // ---- Live validation: re-validate on input while errored, on blur always
     fields.forEach((field) => {
       field.addEventListener("input", () => {
         if (field.closest(".field")?.classList.contains("has-error")) {
@@ -338,33 +343,68 @@
       field.addEventListener("blur", () => validateField(field));
     });
 
-    form.addEventListener("submit", (e) => {
+    // ---- Submit handler
+    form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
+      // 1. Validate
       const allValid = fields.map(validateField).every(Boolean);
 
       if (!allValid) {
-        formStatus.textContent = "Please fix the errors above.";
         formStatus.style.color = "#ef4444";
+        formStatus.textContent = "Please fix the errors above.";
         const firstError = $(".field.has-error input, .field.has-error textarea");
         firstError?.focus();
         return;
       }
 
-      // --- Simulated send -------------------------------------
-      // Replace this block with a real fetch() to your endpoint.
+      // 2. Lock the UI
+      const submitBtn = form.querySelector('button[type="submit"]');
+      const originalBtnText = submitBtn ? submitBtn.textContent : "";
+      if (submitBtn) {
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending…";
+      }
       formStatus.style.color = "";
-      formStatus.textContent = "Sending…";
+      formStatus.textContent = "";
 
-      setTimeout(() => {
+      try {
+        // 3. Send to Formspree
+        const response = await fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { Accept: "application/json" },
+        });
+
+        if (response.ok) {
+          // Success
+          formStatus.style.color = "";
+          formStatus.textContent =
+            "Thanks! Your message has been sent. I'll be in touch soon.";
+          form.reset();
+          fields.forEach(clearError);
+          setTimeout(() => (formStatus.textContent = ""), 6000);
+        } else {
+          // Formspree returned an error (validation, rate limit, etc.)
+          const data = await response.json().catch(() => ({}));
+          const msg =
+            (data?.errors && data.errors.map((err) => err.message).join(", ")) ||
+            "Something went wrong. Please try again.";
+          formStatus.style.color = "#ef4444";
+          formStatus.textContent = msg;
+        }
+      } catch (err) {
+        // Network failure
+        formStatus.style.color = "#ef4444";
         formStatus.textContent =
-          "Thanks! Your message has been sent. I'll be in touch soon.";
-        form.reset();
-        fields.forEach(clearError);
-
-        // Reset status after a few seconds
-        setTimeout(() => (formStatus.textContent = ""), 6000);
-      }, 800);
+          "Network error. Please check your connection and try again.";
+      } finally {
+        // 4. Restore the button
+        if (submitBtn) {
+          submitBtn.disabled = false;
+          submitBtn.textContent = originalBtnText;
+        }
+      }
     });
   }
 
