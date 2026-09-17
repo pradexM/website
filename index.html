@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Portfolio of pradex — A student & computer enthusiast." />
+  <title>pradex — Portfolio</title>
+
+  <!-- Favicon (replace with your own) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>" />
+
+  <!-- Fonts (optional – remove if you prefer system fonts) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="assets/CSS/style.css" />
+</head>
+<body>
+
+  <!-- Skip link for keyboard users -->
+  <a class="skip-link" href="#main">Skip to content</a>
+
+  <!-- ============================= HEADER / NAV ============================= -->
+  <header class="header" id="header">
+    <nav class="nav container" aria-label="Main navigation">
+      <a href="#home" class="logo">Your<span>Name</span></a>
+
+      <ul class="nav__list" id="nav-menu">
+        <li><a class="nav__link" href="#home">Home</a></li>
+        <li><a class="nav__link" href="#about">About</a></li>
+        <li><a class="nav__link" href="#skills">Skills</a></li>
+        <li><a class="nav__link" href="#projects">Projects</a></li>
+        <li><a class="nav__link" href="#contact">Contact</a></li>
+      </ul>
+
+      <div class="nav__actions">
+        <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle color theme">🌙</button>
+        <button id="nav-toggle" class="icon-btn nav__toggle" type="button"
+                aria-label="Toggle menu" aria-expanded="false" aria-controls="nav-menu">
+          <span class="burger"></span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <main id="main">
+
+    <!-- ============================= HERO ============================= -->
+    <section id="home" class="hero">
+      <div class="container hero__inner">
+        <div class="hero__content">
+          <p class="hero__eyebrow">Hi, I'm</p>
+          <h1 class="hero__title">Your Name<span class="dot">.</span></h1>
+          <h2 class="hero__subtitle">Frontend Developer &amp; UI Designer</h2>
+          <p class="hero__text">
+            I build fast, accessible and delightful web experiences.
+            Currently focused on design systems and interactive UI.
+          </p>
+
+          <div class="hero__cta">
+            <a href="#projects" class="btn btn--primary">View my work</a>
+            <a href="#contact" class="btn btn--ghost">Get in touch</a>
+          </div>
+
+          <ul class="socials">
+            <li><a href="https://github.com/" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a></li>
+            <li><a href="https://linkedin.com/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a></li>
+            <li><a href="https://twitter.com/" target="_blank" rel="noopener" aria-label="Twitter">Twitter</a></li>
+          </ul>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true">
+          <!-- Replace this with <img src="avatar.jpg" alt=""> -->
+          <div class="avatar">YN</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= ABOUT ============================= -->
+    <section id="about" class="section section--alt">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">About</p>
+          <h2 class="section__title">A little about me</h2>
+        </header>
+
+        <div class="about__grid">
+          <div class="about__text reveal">
+            <p>
+              I'm a developer based in <strong>Your City</strong> with X years of experience
+              turning ideas into polished, production-ready interfaces.
+            </p>
+            <p>
+              I care about clean code, performance budgets, accessibility and the small
+              details that make a product feel great. When I'm not coding, I'm probably
+              sketching UI ideas or drinking too much coffee.
+            </p>
+            <a href="#" class="btn btn--ghost" download>Download résumé</a>
+          </div>
+
+          <ul class="stats reveal">
+            <li class="stat"><strong>5+</strong><span>Years experience</span></li>
+            <li class="stat"><strong>30+</strong><span>Projects shipped</span></li>
+            <li class="stat"><strong>15+</strong><span>Happy clients</span></li>
+            <li class="stat"><strong>∞</strong><span>Cups of coffee</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= SKILLS ============================= -->
+    <section id="skills" class="section">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">Skills</p>
+          <h2 class="section__title">What I work with</h2>
+          <p class="section__lead">Tools and technologies I use day to day.</p>
+        </header>
+
+        <div class="skills__grid">
+          <article class="card reveal">
+            <h3 class="card__title">Frontend</h3>
+            <ul class="pills">
+              <li class="pill">HTML5</li>
+              <li class="pill">CSS3</li>
+              <li class="pill">JavaScript</li>
+              <li class="pill">TypeScript</li>
+              <li class="pill">React</li>
+              <li class="pill">Vue</li>
+            </ul>
+          </article>
+
+          <article class="card reveal">
+            <h3 class="card__title">Styling &amp; Design</h3>
+            <ul class="pills">
+              <li class="pill">Sass</li>
+              <li class="pill">Tailwind</li>
+              <li class="pill">Figma</li>
+              <li class="pill">Responsive</li>
+              <li class="pill">Accessibility</li>
+            </ul>
+          </article>
+
+          <article class="card reveal">
+            <h3 class="card__title">Tooling &amp; Backend</h3>
+            <ul class="pills">
+              <li class="pill">Git</li>
+              <li class="pill">Vite</li>
+              <li class="pill">Node.js</li>
+              <li class="pill">REST APIs</li>
+              <li class="pill">Testing</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================= PROJECTS ============================= -->
+    <section id="projects" class="section section--alt">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">Projects</p>
+          <h2 class="section__title">Selected work</h2>
+          <p class="section__lead">
+            A few things I've built. Edit the <code>projects</code> array in
+            <code>script.js</code> to add your own.
+          </p>
+        </header>
+
+        <!-- Cards are injected by JavaScript -->
+        <div class="projects__grid" id="projects-grid"></div>
+      </div>
+    </section>
+
+    <!-- ============================= CONTACT ============================= -->
+    <section id="contact" class="section">
+      <div class="container">
+        <header class="section__head reveal">
+          <p class="section__eyebrow">Contact</p>
+          <h2 class="section__title">Let's build something</h2>
+          <p class="section__lead">
+            Have a project or just want to say hi? Drop me a message.
+          </p>
+        </header>
+
+        <div class="contact__grid">
+          <ul class="contact__info reveal">
+            <li>
+              <span class="contact__label">Email</span>
+              <a href="mailto:hello@example.com">hello@example.com</a>
+            </li>
+            <li>
+              <span class="contact__label">Location</span>
+              <span>Your City, Country</span>
+            </li>
+            <li>
+              <span class="contact__label">Availability</span>
+              <span>Open to freelance &amp; full-time</span>
+            </li>
+          </ul>
+
+          <!-- NOTE: this form has no backend. Hook it up to Formspree / Netlify / your API. -->
+          <form class="form reveal" id="contact-form" novalidate>
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+              <p class="error" data-error-for="name"></p>
+            </div>
+
+            <div class="field">
+              <label for="email">Email</label>
+              <input type="email" id="email" name="email" placeholder="jane@example.com" required />
+              <p class="error" data-error-for="email"></p>
+            </div>
+
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+              <p class="error" data-error-for="message"></p>
+            </div>
+
+            <button type="submit" class="btn btn--primary btn--full">Send message</button>
+            <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============================= FOOTER ============================= -->
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p>&copy; <span id="year"></span> Your Name. All rights reserved.</p>
+      <ul class="footer__links">
+        <li><a href="#home">Back to top</a></li>
+        <li><a href="https://github.com/" target="_blank" rel="noopener">GitHub</a></li>
+        <li><a href="https://linkedin.com/" target="_blank" rel="noopener">LinkedIn</a></li>
+      </ul>
+    </div>
+  </footer>
+
+  <!-- Back to top -->
+  <button id="to-top" class="to-top" type="button" aria-label="Back to top">↑</button>
+
+  <script src="assets/JS/script.js"></script>
+</body>
+</html>
