@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Portfolio of pradex — A student & computer enthusiast." />
-  <title>pradex — Portfolio</title>
+  <meta name="description" content="Portfolio of Pradex — student, developer & computer enthusiast based in Kathmandu." />
+  <title>Pradex — Portfolio</title>
 
-  <!-- Favicon (replace with your own) -->
+  <!-- Favicon -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💼</text></svg>" />
 
-  <!-- Fonts (optional – remove if you prefer system fonts) -->
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -24,7 +24,7 @@
   <!-- ============================= HEADER / NAV ============================= -->
   <header class="header" id="header">
     <nav class="nav container" aria-label="Main navigation">
-      <a href="#home" class="logo">P<span>M</span></a>
+      <a href="#home" class="logo">Pradex<span>.</span></a>
 
       <ul class="nav__list" id="nav-menu">
         <li><a class="nav__link" href="#home">Home</a></li>
@@ -52,10 +52,10 @@
         <div class="hero__content">
           <p class="hero__eyebrow">Hi, I'm</p>
           <h1 class="hero__title">Pradex<span class="dot">.</span></h1>
-          <h2 class="hero__subtitle">Frontend Developer &amp; UI Designer</h2>
+          <h2 class="hero__subtitle">Developer &amp; Computer Enthusiast</h2>
           <p class="hero__text">
             I build fast, accessible and delightful web experiences.
-            Currently focused on design systems and interactive UI.
+            Currently focused on automation, design systems, and interactive UI.
           </p>
 
           <div class="hero__cta">
@@ -72,7 +72,7 @@
 
         <div class="hero__visual" aria-hidden="true">
           <!-- Replace this with <img src="avatar.jpg" alt=""> -->
-          <div class="avatar">YN</div>
+          <div class="avatar">P</div>
         </div>
       </div>
     </section>
@@ -88,7 +88,7 @@
         <div class="about__grid">
           <div class="about__text reveal">
             <p>
-              I'm a developer based in <strong>Kathmandu</strong> with 1 years of experience
+              I'm a developer based in <strong>Kathmandu</strong> with 1 year of experience
               turning ideas into polished, production-ready interfaces.
             </p>
             <p>
@@ -96,13 +96,12 @@
               details that make a product feel great. When I'm not coding, I'm probably
               sketching UI ideas or drinking too much coffee.
             </p>
-            
           </div>
 
           <ul class="stats reveal">
             <li class="stat"><strong>1+</strong><span>Years experience</span></li>
             <li class="stat"><strong>3+</strong><span>Projects shipped</span></li>
-            <li class="stat"><strong>none</strong><span>Happy clients</span></li>
+            <li class="stat"><strong>∞</strong><span>Curiosity</span></li>
             <li class="stat"><strong>∞</strong><span>Cups of coffee</span></li>
           </ul>
         </div>
@@ -120,14 +119,13 @@
 
         <div class="skills__grid">
           <article class="card reveal">
-            <h3 class="card__title">Automation</h3>
+            <h3 class="card__title">Languages</h3>
             <ul class="pills">
               <li class="pill">HTML5</li>
               <li class="pill">CSS3</li>
               <li class="pill">JavaScript</li>
               <li class="pill">Python</li>
               <li class="pill">C++</li>
-              <li class="pill">Vue</li>
             </ul>
           </article>
 
@@ -149,7 +147,7 @@
               <li class="pill">Vite</li>
               <li class="pill">Node.js</li>
               <li class="pill">REST APIs</li>
-              <li class="pill">Testing</li>
+              <li class="pill">Automation</li>
             </ul>
           </article>
         </div>
@@ -188,7 +186,7 @@
           <ul class="contact__info reveal">
             <li>
               <span class="contact__label">Email</span>
-              <a href="mailto:hello@example.com">mepardip07@gmail.com</a>
+              <a href="mailto:mepardip07@gmail.com">mepardip07@gmail.com</a>
             </li>
             <li>
               <span class="contact__label">Location</span>
@@ -200,62 +198,62 @@
             </li>
           </ul>
 
-          <!-- NOTE: this form has no backend. Hook it up to Formspree / Netlify / your API. -->
+          <!-- Formspree-powered contact form -->
           <form
-  class="form reveal"
-  id="contact-form"
-  action="https://formspree.io/f/xeaoqkdl"
-  method="POST"
-  novalidate
->
-  <!-- Email subject line -->
-  <input type="hidden" name="_subject" value="New message from portfolio site" />
+            class="form reveal"
+            id="contact-form"
+            action="https://formspree.io/f/xeaoqkdl"
+            method="POST"
+            novalidate
+          >
+            <!-- Email subject line -->
+            <input type="hidden" name="_subject" value="New message from portfolio site" />
 
-  <!-- Honeypot (anti-spam) -->
-  <input
-    type="text"
-    name="_gotcha"
-    style="display:none"
-    tabindex="-1"
-    autocomplete="off"
-    aria-hidden="true"
-  />
+            <!-- Honeypot (anti-spam) -->
+            <input
+              type="text"
+              name="_gotcha"
+              style="display:none"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+            />
 
-  <div class="field">
-    <label for="name">Name</label>
-    <input type="text" id="name" name="name" placeholder="Jane Doe" required />
-    <p class="error" data-error-for="name"></p>
-  </div>
+            <div class="field">
+              <label for="name">Name</label>
+              <input type="text" id="name" name="name" placeholder="Jane Doe" required />
+              <p class="error" data-error-for="name"></p>
+            </div>
 
-  <div class="field">
-    <label for="email">Email</label>
-    <input
-      type="email"
-      id="email"
-      name="email"
-      placeholder="jane@example.com"
-      required
-    />
-    <p class="error" data-error-for="email"></p>
-  </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="jane@example.com"
+                required
+              />
+              <p class="error" data-error-for="email"></p>
+            </div>
 
-  <div class="field">
-    <label for="message">Message</label>
-    <textarea
-      id="message"
-      name="message"
-      rows="5"
-      placeholder="Tell me about your project..."
-      required
-    ></textarea>
-    <p class="error" data-error-for="message"></p>
-  </div>
+            <div class="field">
+              <label for="message">Message</label>
+              <textarea
+                id="message"
+                name="message"
+                rows="5"
+                placeholder="Tell me about your project..."
+                required
+              ></textarea>
+              <p class="error" data-error-for="message"></p>
+            </div>
 
-  <button type="submit" class="btn btn--primary btn--full">
-    Send message
-  </button>
-  <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
-</form>
+            <button type="submit" class="btn btn--primary btn--full">
+              Send message
+            </button>
+            <p class="form__status" id="form-status" role="status" aria-live="polite"></p>
+          </form>
         </div>
       </div>
     </section>
