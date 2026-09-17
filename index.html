@@ -255,6 +255,16 @@
   <!-- Back to top -->
   <button id="to-top" class="to-top" type="button" aria-label="Back to top">↑</button>
 
-  <script src="script.js"></script>
+
+  <script>
+  window.formspree = window.formspree || function () {
+    (formspree.q = formspree.q || []).push(arguments);
+  };
+  formspree('initForm', { formElement: '#contact-form', formId: 'xeaoqkdl' });
+</script>
+<script src="https://unpkg.com/@formspree/ajax@1" defer></script>
+
+<!-- your script.js AFTER (so it doesn't conflict) -->
+<script src="script.js"></script>
 </body>
 </html>
