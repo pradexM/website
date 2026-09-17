@@ -19,9 +19,6 @@
 
   /* =======================================================
      1. THEME TOGGLE (dark / light)
-     ------------------------------------------------------
-     Reads saved theme from localStorage, falls back to
-     system preference.
      ======================================================= */
   const themeToggle = $("#theme-toggle");
   const root        = document.documentElement;
@@ -46,7 +43,6 @@
     }
   }
 
-  // Initial theme
   applyTheme(getPreferredTheme());
 
   themeToggle?.addEventListener("click", () => {
@@ -55,7 +51,6 @@
     localStorage.setItem("theme", next);
   });
 
-  // React to OS-level theme changes (only if user hasn't chosen)
   window
     .matchMedia("(prefers-color-scheme: dark)")
     .addEventListener("change", (e) => {
@@ -90,12 +85,10 @@
 
   navToggle?.addEventListener("click", toggleMenu);
 
-  // Close menu when a link is clicked
   navLinks.forEach((link) => {
     link.addEventListener("click", closeMenu);
   });
 
-  // Close menu on Escape
   document.addEventListener("keydown", (e) => {
     if (e.key === "Escape" && navMenu?.classList.contains("is-open")) {
       closeMenu();
@@ -103,7 +96,6 @@
     }
   });
 
-  // Close menu when resizing up to desktop
   window.addEventListener("resize", () => {
     if (window.innerWidth > 720) closeMenu();
   });
@@ -127,7 +119,7 @@
   const sections = $$("main section[id]");
 
   const setActiveLink = () => {
-    const scrollPos = window.scrollY + 120; // offset for sticky header
+    const scrollPos = window.scrollY + 120;
     let currentId = sections[0]?.id;
 
     sections.forEach((section) => {
@@ -168,7 +160,6 @@
 
     revealElements.forEach((el) => revealObserver.observe(el));
   } else {
-    // Fallback: show everything immediately
     revealElements.forEach((el) => el.classList.add("is-visible"));
   }
 
@@ -183,7 +174,7 @@
       description:
         "A short description of what this project does and the problem it solves.",
       tags: ["React", "TypeScript", "Tailwind"],
-      image: "", // optional — path to an image
+      image: "",
       demo: "https://example.com",
       repo: "https://github.com/",
     },
@@ -213,7 +204,6 @@
     const card = document.createElement("article");
     card.className = "card project reveal";
 
-    // Thumbnail: image or gradient with initials
     const thumb = project.image
       ? `<img src="${project.image}" alt="${project.title} preview" loading="lazy" />`
       : project.title
@@ -256,7 +246,6 @@
     projects.forEach((p) => frag.appendChild(createProjectCard(p)));
     projectsGrid.appendChild(frag);
 
-    // Observe newly added reveals
     if ("IntersectionObserver" in window && !prefersReducedMotion) {
       const observer = new IntersectionObserver(
         (entries, obs) => {
@@ -281,59 +270,72 @@
      7. CONTACT FORM — validation + Formspree submission
      ------------------------------------------------------
      Endpoint: https://formspree.io/f/xeaoqkdl
-     Client-side validation runs first; only clean data is
-     sent to Formspree via fetch().
+     Client-side validation runs first; only clean data
+     reaches Formspree.
      ======================================================= */
   const form       = $("#contact-form");
   const formStatus = $("#form-status");
 
   const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-  function showError(field, message) {
+  /**
+   * Find the <p class="error"> element for a field.
+   * Prefers data-error-for="<name>", falls back to .field wrapper.
+   */
+  function getErrorEl(field) {
+    if (!form) return null;
+    const key = field.name || field.id;
+    if (key) {
+      const byAttr = form.querySelector(`.error[data-error-for="${key}"]`);
+      if (byAttr) return byAttr;
+    }
     const wrapper = field.closest(".field");
-    wrapper?.classList.add("has-error");
-    const errorEl = wrapper?.querySelector(".error");
-    if (errorEl) errorEl.textContent = message;
+    return wrapper ? wrapper.querySelector(".error") : null;
+  }
+
+  function showError(field, message) {
     field.setAttribute("aria-invalid", "true");
+    field.closest(".field")?.classList.add("has-error");
+    const errorEl = getErrorEl(field);
+    if (errorEl) errorEl.textContent = message;
+    return message;
   }
 
   function clearError(field) {
-    const wrapper = field.closest(".field");
-    wrapper?.classList.remove("has-error");
-    const errorEl = wrapper?.querySelector(".error");
-    if (errorEl) errorEl.textContent = "";
     field.removeAttribute("aria-invalid");
+    field.closest(".field")?.classList.remove("has-error");
+    const errorEl = getErrorEl(field);
+    if (errorEl) errorEl.textContent = "";
   }
 
   function validateField(field) {
-    const value = field.value.trim();
+    const value = (field.value || "").trim();
 
-    if (!value) {
-      showError(field, "This field is required.");
-      return false;
+    if (field.required && !value) {
+      return showError(field, "This field is required.");
     }
-
-    if (field.type === "email" && !emailRegex.test(value)) {
-      showError(field, "Please enter a valid email address.");
-      return false;
+    if (field.type === "email" && value && !emailRegex.test(value)) {
+      return showError(field, "Please enter a valid email address.");
     }
-
-    if (field.id === "message" && value.length < 10) {
-      showError(field, "Message must be at least 10 characters.");
-      return false;
+    if (field.id === "message" && value && value.length < 10) {
+      return showError(field, "Message must be at least 10 characters.");
     }
 
     clearError(field);
-    return true;
+    return null;
   }
 
   if (form) {
-    // Only validate real user fields (skip hidden honeypot / _subject etc.)
-    const fields = $$("input, textarea", form).filter(
-      (f) => !f.name.startsWith("_") && f.type !== "hidden"
-    );
+    // Only validate visible, user-facing fields.
+    // Skips hidden inputs, Formspree meta (_subject, _gotcha), submit buttons.
+    const fields = $$("input, textarea", form).filter((f) => {
+      if (["hidden", "submit", "button", "reset"].includes(f.type)) return false;
+      if (f.name && f.name.startsWith("_")) return false;
+      if (f.offsetParent === null) return false;
+      return true;
+    });
 
-    // ---- Live validation: re-validate on input while errored, on blur always
+    // Live validation
     fields.forEach((field) => {
       field.addEventListener("input", () => {
         if (field.closest(".field")?.classList.contains("has-error")) {
@@ -343,22 +345,30 @@
       field.addEventListener("blur", () => validateField(field));
     });
 
-    // ---- Submit handler
+    // Submit
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
 
       // 1. Validate
-      const allValid = fields.map(validateField).every(Boolean);
+      let firstErrorMsg = null;
+      let firstErrorField = null;
 
-      if (!allValid) {
+      fields.forEach((field) => {
+        const msg = validateField(field);
+        if (msg && !firstErrorMsg) {
+          firstErrorMsg = msg;
+          firstErrorField = field;
+        }
+      });
+
+      if (firstErrorMsg) {
         formStatus.style.color = "#ef4444";
-        formStatus.textContent = "Please fix the errors above.";
-        const firstError = $(".field.has-error input, .field.has-error textarea");
-        firstError?.focus();
+        formStatus.textContent = firstErrorMsg;
+        firstErrorField?.focus();
         return;
       }
 
-      // 2. Lock the UI
+      // 2. Lock UI
       const submitBtn = form.querySelector('button[type="submit"]');
       const originalBtnText = submitBtn ? submitBtn.textContent : "";
       if (submitBtn) {
@@ -377,7 +387,6 @@
         });
 
         if (response.ok) {
-          // Success
           formStatus.style.color = "";
           formStatus.textContent =
             "Thanks! Your message has been sent. I'll be in touch soon.";
@@ -385,21 +394,18 @@
           fields.forEach(clearError);
           setTimeout(() => (formStatus.textContent = ""), 6000);
         } else {
-          // Formspree returned an error (validation, rate limit, etc.)
           const data = await response.json().catch(() => ({}));
           const msg =
             (data?.errors && data.errors.map((err) => err.message).join(", ")) ||
-            "Something went wrong. Please try again.";
+            `Something went wrong (${response.status}). Please try again.`;
           formStatus.style.color = "#ef4444";
           formStatus.textContent = msg;
         }
       } catch (err) {
-        // Network failure
         formStatus.style.color = "#ef4444";
         formStatus.textContent =
           "Network error. Please check your connection and try again.";
       } finally {
-        // 4. Restore the button
         if (submitBtn) {
           submitBtn.disabled = false;
           submitBtn.textContent = originalBtnText;
@@ -429,9 +435,6 @@
 
   /* =======================================================
      9. SMOOTH SCROLL FOR ANCHOR LINKS (with header offset)
-     ------------------------------------------------------
-     Native scroll-behavior handles most cases, but this
-     accounts for the sticky header height.
      ======================================================= */
   const headerHeight = header?.offsetHeight || 68;
 
@@ -452,7 +455,6 @@
         behavior: prefersReducedMotion ? "auto" : "smooth",
       });
 
-      // Update URL without adding a history entry jump
       history.pushState(null, "", targetId);
     });
   });
